@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { SimplePokerGame } from './components/SimplePokerGame';
 import { HandRules } from './components/HandRules';
+import { PokerTable } from './components/PokerTable';
 
-type ViewMode = 'game' | 'rules';
+type ViewMode = 'game' | 'rules' | 'table';
 
 function App() {
-  const [currentView, setCurrentView] = useState<ViewMode>('rules');
+  const [currentView, setCurrentView] = useState<ViewMode>('table');
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-600 via-pink-500 to-blue-600">
@@ -17,26 +18,38 @@ function App() {
               <button
                 onClick={() => setCurrentView('rules')}
                 className={`
-                  px-8 py-3 rounded-full font-bold text-sm transition-all duration-300 transform
+                  px-6 py-3 rounded-full font-bold text-sm transition-all duration-300 transform
                   ${currentView === 'rules' 
                     ? 'bg-gradient-to-r from-pink-500 to-purple-500 text-white shadow-lg scale-105' 
                     : 'text-white/90 hover:text-white hover:bg-white/20'
                   }
                 `}
               >
-                🎯 役一覧
+                📚 ルール
               </button>
               <button
                 onClick={() => setCurrentView('game')}
                 className={`
-                  px-8 py-3 rounded-full font-bold text-sm transition-all duration-300 transform
+                  px-6 py-3 rounded-full font-bold text-sm transition-all duration-300 transform
                   ${currentView === 'game' 
                     ? 'bg-gradient-to-r from-pink-500 to-purple-500 text-white shadow-lg scale-105' 
                     : 'text-white/90 hover:text-white hover:bg-white/20'
                   }
                 `}
               >
-                🎴 ゲーム
+                🎲 練習
+              </button>
+              <button
+                onClick={() => setCurrentView('table')}
+                className={`
+                  px-6 py-3 rounded-full font-bold text-sm transition-all duration-300 transform
+                  ${currentView === 'table' 
+                    ? 'bg-gradient-to-r from-pink-500 to-purple-500 text-white shadow-lg scale-105' 
+                    : 'text-white/90 hover:text-white hover:bg-white/20'
+                  }
+                `}
+              >
+                🎯 対戦
               </button>
             </div>
           </div>
@@ -47,6 +60,7 @@ function App() {
       <main>
         {currentView === 'rules' && <HandRules />}
         {currentView === 'game' && <SimplePokerGame />}
+        {currentView === 'table' && <PokerTable />}
       </main>
     </div>
   );
