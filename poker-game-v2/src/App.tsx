@@ -2,11 +2,12 @@ import { useState } from 'react';
 import { SimplePokerGame } from './components/SimplePokerGame';
 import { HandRules } from './components/HandRules';
 import { PokerTable } from './components/PokerTable';
+import { SimplePoker } from './components/SimplePoker';
 
-type ViewMode = 'game' | 'rules' | 'table';
+type ViewMode = 'game' | 'rules' | 'table' | 'simple';
 
 function App() {
-  const [currentView, setCurrentView] = useState<ViewMode>('table');
+  const [currentView, setCurrentView] = useState<ViewMode>('simple');
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-600 via-pink-500 to-blue-600">
@@ -16,9 +17,21 @@ function App() {
           <div className="flex justify-center">
             <div className="flex bg-white/30 backdrop-blur-sm rounded-full p-1 mt-2 mb-2 shadow-lg border border-white/40">
               <button
+                onClick={() => setCurrentView('simple')}
+                className={`
+                  px-3 py-2 rounded-full font-bold text-xs transition-all duration-300 transform
+                  ${currentView === 'simple' 
+                    ? 'bg-gradient-to-r from-pink-500 to-purple-500 text-white shadow-lg scale-105' 
+                    : 'text-white/90 hover:text-white hover:bg-white/20'
+                  }
+                `}
+              >
+                ✨ シンプル
+              </button>
+              <button
                 onClick={() => setCurrentView('rules')}
                 className={`
-                  px-4 py-2 rounded-full font-bold text-xs transition-all duration-300 transform
+                  px-3 py-2 rounded-full font-bold text-xs transition-all duration-300 transform
                   ${currentView === 'rules' 
                     ? 'bg-gradient-to-r from-pink-500 to-purple-500 text-white shadow-lg scale-105' 
                     : 'text-white/90 hover:text-white hover:bg-white/20'
@@ -30,7 +43,7 @@ function App() {
               <button
                 onClick={() => setCurrentView('game')}
                 className={`
-                  px-4 py-2 rounded-full font-bold text-xs transition-all duration-300 transform
+                  px-3 py-2 rounded-full font-bold text-xs transition-all duration-300 transform
                   ${currentView === 'game' 
                     ? 'bg-gradient-to-r from-pink-500 to-purple-500 text-white shadow-lg scale-105' 
                     : 'text-white/90 hover:text-white hover:bg-white/20'
@@ -42,7 +55,7 @@ function App() {
               <button
                 onClick={() => setCurrentView('table')}
                 className={`
-                  px-4 py-2 rounded-full font-bold text-xs transition-all duration-300 transform
+                  px-3 py-2 rounded-full font-bold text-xs transition-all duration-300 transform
                   ${currentView === 'table' 
                     ? 'bg-gradient-to-r from-pink-500 to-purple-500 text-white shadow-lg scale-105' 
                     : 'text-white/90 hover:text-white hover:bg-white/20'
@@ -58,6 +71,7 @@ function App() {
 
       {/* Content */}
       <main>
+        {currentView === 'simple' && <SimplePoker />}
         {currentView === 'rules' && <HandRules />}
         {currentView === 'game' && <SimplePokerGame />}
         {currentView === 'table' && <PokerTable />}
