@@ -56,7 +56,7 @@ export const SimplePokerGame: React.FC = () => {
             
             {playerHand.length > 0 ? (
               <div className="flex justify-center gap-2 mb-4">
-                {playerHand.map((card, index) => (
+                {playerHand.map((card) => (
                   <Card 
                     key={`${card.suit}-${card.rank}`} 
                     card={card}
@@ -66,9 +66,9 @@ export const SimplePokerGame: React.FC = () => {
               </div>
             ) : (
               <div className="flex justify-center gap-2 mb-4">
-                {Array.from({ length: 5 }).map((_, index) => (
+                {Array.from({ length: 5 }).map((_, i) => (
                   <div 
-                    key={index}
+                    key={i}
                     className="w-16 h-20 bg-gray-100 rounded-lg border-2 border-dashed border-gray-300 flex items-center justify-center"
                   >
                     <span className="text-gray-400 text-xs">?</span>
