@@ -10,7 +10,7 @@ export const CardBack: React.FC<CardBackProps> = ({ className = '' }) => {
       bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600
       rounded-xl border-2 border-white/30 shadow-lg
       flex flex-col items-center justify-center
-      w-18 h-24 transition-all duration-200
+      w-12 h-16 transition-all duration-200
       hover:scale-105 hover:-translate-y-1 relative overflow-hidden
       ${className}
     `}>
@@ -18,7 +18,7 @@ export const CardBack: React.FC<CardBackProps> = ({ className = '' }) => {
       <div className="absolute inset-2 rounded-lg border border-white/20 bg-white/5">
         <div className="absolute inset-1 rounded-md border border-white/10">
           <div className="w-full h-full flex items-center justify-center">
-            <div className="text-white/80 text-2xl font-bold">
+            <div className="text-white/80 text-lg font-bold">
               🎴
             </div>
           </div>

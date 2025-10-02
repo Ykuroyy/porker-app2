@@ -41,12 +41,12 @@ export const Player: React.FC<PlayerProps> = ({
 
   return (
     <div className={`
-      flex gap-3 ${getPositionClasses()}
+      flex gap-2 ${getPositionClasses()}
       ${isActive ? 'animate-pulse' : ''}
     `}>
       {/* プレイヤー情報 */}
       <div className={`
-        flex flex-col items-center p-3 rounded-2xl backdrop-blur-sm border
+        flex flex-col items-center p-2 rounded-xl backdrop-blur-sm border text-center
         ${isActive 
           ? 'bg-yellow-200/30 border-yellow-300/50 shadow-lg shadow-yellow-300/20' 
           : 'bg-white/20 border-white/30'
@@ -54,32 +54,30 @@ export const Player: React.FC<PlayerProps> = ({
         ${isPlayer ? 'bg-green-200/30 border-green-300/50' : ''}
       `}>
         {/* アバターと名前 */}
-        <div className="flex flex-col items-center mb-2">
-          <div className="text-3xl mb-1">{isPlayer ? '👤' : avatar}</div>
-          <div className="text-white font-bold text-sm text-center">{name}</div>
-        </div>
+        <div className="text-xl mb-1">{isPlayer ? '👤' : avatar}</div>
+        <div className="text-white font-bold text-xs mb-1">{name}</div>
 
         {/* チップ情報 */}
-        <div className="bg-black/20 rounded-full px-3 py-1 mb-2">
+        <div className="bg-black/20 rounded-full px-2 py-1 mb-1">
           <div className="text-yellow-300 font-bold text-xs">
-            💰 {chips.toLocaleString()}
+            💰{chips.toLocaleString()}
           </div>
         </div>
 
         {/* 最後のアクション */}
         {lastAction && (
-          <div className="bg-white/20 rounded-full px-2 py-1">
-            <div className="text-white text-xs font-medium">
-              {lastAction}
+          <div className="bg-white/20 rounded-full px-1 py-1">
+            <div className="text-white text-xs">
+              {lastAction === 'fold' ? '降' : lastAction === 'call' ? 'C' : lastAction === 'bet' ? 'B' : lastAction}
             </div>
           </div>
         )}
       </div>
 
       {/* カード表示 */}
-      <div className="flex gap-2">
+      <div className="flex gap-1">
         {cards.map((card, index) => (
-          <div key={index} className="transform -rotate-2 first:rotate-2">
+          <div key={index} className="transform -rotate-1 first:rotate-1" style={{ transform: `scale(0.7) rotate(${index % 2 === 0 ? '-2' : '2'}deg)` }}>
             {isPlayer ? (
               <Card card={card} />
             ) : (

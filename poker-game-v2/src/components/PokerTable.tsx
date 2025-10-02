@@ -109,140 +109,129 @@ export const PokerTable: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-800 via-green-700 to-emerald-800 p-4 relative overflow-hidden">
+    <div className="h-screen bg-gradient-to-br from-green-800 via-green-700 to-emerald-800 p-2 relative overflow-hidden flex flex-col">
       {/* テーブル背景装飾 */}
       <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-white rounded-full blur-3xl"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-yellow-300 rounded-full blur-3xl"></div>
+        <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-white rounded-full blur-3xl"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-24 h-24 bg-yellow-300 rounded-full blur-3xl"></div>
       </div>
 
-      <div className="max-w-4xl mx-auto relative z-10">
-        {/* ヘッダー */}
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-white mb-2 drop-shadow-lg">
-            🎴 カワイイ♡ポーカーテーブル 🎯
+      <div className="w-full mx-auto relative z-10 flex flex-col h-full">
+        {/* コンパクトヘッダー */}
+        <div className="text-center py-2 flex-shrink-0">
+          <h1 className="text-lg font-bold text-white drop-shadow-lg">
+            🎴 AI対戦ポーカー 🎯
           </h1>
-          <p className="text-white/90 text-lg">AI相手と本格ポーカー対戦！</p>
         </div>
 
-        {/* ポーカーテーブル */}
-        <div className="relative">
-          {/* テーブル面 */}
-          <div className="bg-green-600/80 backdrop-blur-sm rounded-full w-full h-96 border-8 border-amber-600/50 shadow-2xl relative overflow-hidden">
-            {/* テーブルの質感 */}
-            <div className="absolute inset-4 rounded-full border-4 border-amber-700/30 bg-gradient-to-br from-green-700/50 to-green-800/50"></div>
-            
-            {/* ポット表示 */}
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-              <div className="bg-black/40 backdrop-blur-sm rounded-2xl px-6 py-4 border border-yellow-400/50">
-                <div className="text-center">
-                  <div className="text-yellow-300 text-2xl font-bold">💰 ポット</div>
-                  <div className="text-white text-xl font-bold">{pot.toLocaleString()}</div>
-                </div>
-                
-                {gamePhase === 'showdown' && winner && (
-                  <div className="mt-4 text-center">
-                    <div className="text-yellow-300 text-lg">🏆 勝者</div>
-                    <div className="text-white font-bold">{winner.name}</div>
-                    <div className="text-sm text-white/80">{winner.handResult?.type}</div>
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-
-          {/* プレイヤー配置 */}
-          <div className="absolute inset-0">
-            {/* 上部 - AI プレイヤー */}
-            <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+        {/* コンパクトなゲームエリア */}
+        <div className="flex-1 flex flex-col justify-between py-2 min-h-0">
+          
+          {/* 上部 - AI対戦相手たち */}
+          <div className="flex justify-around items-start px-2">
+            <div className="transform scale-75">
               <Player
                 {...players[1]}
                 isActive={activePlayer === 1 && gamePhase === 'betting'}
                 position="top"
               />
             </div>
-
-            {/* 右部 - AI プレイヤー */}
-            <div className="absolute right-0 top-1/2 transform translate-x-1/2 -translate-y-1/2">
+            <div className="transform scale-75">
               <Player
                 {...players[2]}
                 isActive={activePlayer === 2 && gamePhase === 'betting'}
-                position="right"
-              />
-            </div>
-
-            {/* 下部 - 人間プレイヤー */}
-            <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2">
-              <Player
-                {...players[0]}
-                isActive={activePlayer === 0 && gamePhase === 'betting'}
-                position="bottom"
+                position="top"
               />
             </div>
           </div>
+
+          {/* 中央 - ポットとゲーム状況 */}
+          <div className="text-center py-2">
+            <div className="bg-black/40 backdrop-blur-sm rounded-xl px-4 py-2 border border-yellow-400/50 inline-block">
+              <div className="text-yellow-300 text-lg font-bold">💰 {pot.toLocaleString()}</div>
+              
+              {gamePhase === 'showdown' && winner && (
+                <div className="mt-2">
+                  <div className="text-yellow-300 text-sm">🏆 {winner.name}</div>
+                  <div className="text-white text-xs">{winner.handResult?.type}</div>
+                </div>
+              )}
+            </div>
+            
+            {/* ゲーム状況表示 */}
+            <div className="mt-2 text-white/80 text-sm">
+              {gamePhase === 'waiting' && '🎯 ゲーム開始を待っています'}
+              {gamePhase === 'dealing' && '🎴 カード配布中...'}
+              {gamePhase === 'betting' && `🎮 ${players[activePlayer]?.name}の番`}
+              {gamePhase === 'showdown' && '🏆 結果発表！'}
+            </div>
+          </div>
+
+          {/* 下部 - プレイヤー */}
+          <div className="flex justify-center">
+            <Player
+              {...players[0]}
+              isActive={activePlayer === 0 && gamePhase === 'betting'}
+              position="bottom"
+            />
+          </div>
         </div>
 
-        {/* アクションボタン */}
-        <div className="mt-8 text-center">
+        {/* コンパクトなアクションエリア */}
+        <div className="flex-shrink-0 pb-2">
           {gamePhase === 'waiting' && (
-            <button
-              onClick={dealCards}
-              className="px-8 py-4 bg-gradient-to-r from-purple-500 to-pink-500 
-                       text-white font-bold rounded-full text-lg shadow-xl 
-                       hover:from-purple-600 hover:to-pink-600 
-                       transform hover:scale-105 transition-all duration-300"
-            >
-              🎲 ゲーム開始
-            </button>
+            <div className="text-center">
+              <button
+                onClick={dealCards}
+                className="px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-500 
+                         text-white font-bold rounded-full shadow-lg 
+                         hover:from-purple-600 hover:to-pink-600 
+                         transform hover:scale-105 transition-all duration-300"
+              >
+                🎲 ゲーム開始
+              </button>
+            </div>
           )}
 
           {gamePhase === 'betting' && activePlayer === 0 && (
-            <div className="flex justify-center gap-4">
+            <div className="flex justify-center gap-2 px-2">
               <button
                 onClick={() => handlePlayerAction('fold')}
-                className="px-6 py-3 bg-red-500 text-white font-bold rounded-xl 
-                         hover:bg-red-600 transform hover:scale-105 transition-all duration-200"
+                className="flex-1 max-w-24 py-3 bg-red-500 text-white font-bold rounded-xl 
+                         hover:bg-red-600 transform hover:scale-105 transition-all duration-200 text-sm"
               >
-                😔 フォールド
+                😔 降りる
               </button>
               <button
                 onClick={() => handlePlayerAction('call')}
-                className="px-6 py-3 bg-blue-500 text-white font-bold rounded-xl 
-                         hover:bg-blue-600 transform hover:scale-105 transition-all duration-200"
+                className="flex-1 max-w-24 py-3 bg-blue-500 text-white font-bold rounded-xl 
+                         hover:bg-blue-600 transform hover:scale-105 transition-all duration-200 text-sm"
               >
                 👌 コール
               </button>
               <button
                 onClick={() => handlePlayerAction('bet')}
-                className="px-6 py-3 bg-green-500 text-white font-bold rounded-xl 
-                         hover:bg-green-600 transform hover:scale-105 transition-all duration-200"
+                className="flex-1 max-w-24 py-3 bg-green-500 text-white font-bold rounded-xl 
+                         hover:bg-green-600 transform hover:scale-105 transition-all duration-200 text-sm"
               >
-                💪 ベット (50)
+                💪 ベット
               </button>
             </div>
           )}
 
           {gamePhase === 'showdown' && (
-            <button
-              onClick={resetGame}
-              className="px-8 py-4 bg-gradient-to-r from-green-500 to-blue-500 
-                       text-white font-bold rounded-full text-lg shadow-xl 
-                       hover:from-green-600 hover:to-blue-600 
-                       transform hover:scale-105 transition-all duration-300"
-            >
-              🔄 新しいゲーム
-            </button>
+            <div className="text-center">
+              <button
+                onClick={resetGame}
+                className="px-6 py-3 bg-gradient-to-r from-green-500 to-blue-500 
+                         text-white font-bold rounded-full shadow-lg 
+                         hover:from-green-600 hover:to-blue-600 
+                         transform hover:scale-105 transition-all duration-300"
+              >
+                🔄 新ゲーム
+              </button>
+            </div>
           )}
-        </div>
-
-        {/* ゲーム状況表示 */}
-        <div className="mt-6 text-center">
-          <div className="text-white/80 text-sm">
-            {gamePhase === 'waiting' && '🎯 ゲーム開始を待っています'}
-            {gamePhase === 'dealing' && '🎴 カードを配っています...'}
-            {gamePhase === 'betting' && `🎮 ${players[activePlayer]?.name}の番です`}
-            {gamePhase === 'showdown' && '🏆 結果発表！'}
-          </div>
         </div>
       </div>
     </div>

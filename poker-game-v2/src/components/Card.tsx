@@ -32,15 +32,15 @@ export const Card: React.FC<CardProps> = ({ card, className = '' }) => {
       ${getSuitBg(card.suit)}
       rounded-xl border-2 shadow-lg hover:shadow-xl
       flex flex-col items-center justify-center
-      w-18 h-24 font-bold transition-all duration-200
+      w-12 h-16 font-bold transition-all duration-200
       hover:scale-105 hover:-translate-y-1
       ${getSuitColor(card.suit)}
       ${className}
     `}>
-      <div className="text-lg leading-tight font-extrabold">
+      <div className="text-sm leading-tight font-extrabold">
         {card.rank}
       </div>
-      <div className="text-2xl leading-none filter drop-shadow-sm">
+      <div className="text-lg leading-none filter drop-shadow-sm">
         {card.suit}
       </div>
     </div>

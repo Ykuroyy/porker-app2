@@ -88,7 +88,7 @@ export const SimplePokerGame: React.FC = () => {
                 {Array.from({ length: 5 }).map((_, i) => (
                   <div 
                     key={i}
-                    className="w-18 h-24 bg-gradient-to-br from-purple-100 via-pink-50 to-blue-100 
+                    className="w-12 h-16 bg-gradient-to-br from-purple-100 via-pink-50 to-blue-100 
                              rounded-xl border-2 border-dashed border-purple-300 
                              flex items-center justify-center shadow-md
                              hover:shadow-lg transition-all duration-200"
